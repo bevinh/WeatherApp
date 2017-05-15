@@ -5,7 +5,7 @@ import {
     Text,
     StyleSheet
 } from 'react-native';
-
+//TODO: Make this more interesting
 class WeatherView extends Component {
     render(){
         return (
@@ -16,3 +16,5 @@ class WeatherView extends Component {
         )
     }
 }
+
+module.exports = WeatherView;

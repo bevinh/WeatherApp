@@ -74,26 +74,31 @@ class Main extends Component {
         this.setState({
             isLoading: true
         });
-        api.getWeather(this.state.zip).then((res) => {
-            if(res.message === "Not Found"){
-                this.setState({
-                    error: 'Zipcode Not Found',
-                    isLoading: false
-                })
+        api.getLocation(this.state.zip).then((res) => {
+              api.getWeather(res.location.state, res.location.city).then((res) => {
+                if(res.message === "Not Found"){
+                    this.setState({
+                        error: 'City not found',
+                        isLoading: false
+                    })
 
-            } else {
-                this.props.navigator.push({
-                    title: 'weather',
-                    component: WeatherView
+                } else {
+                    console.log(res)
+                    this.props.navigator.push({
+                        title: 'weather',
+                        component: WeatherView
 
-                });
-                this.setState({
-                    isLoading: false,
-                    error: false,
-                    zip: ''
-                })
-            }
-        })
+                    });
+                    this.setState({
+                        isLoading: false,
+                        error: false,
+                        zip: ''
+                    })
+                }
+            })
+        });
+
+
     }
     render(){
         return (
