@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import api from '../utils/api';
+import WeatherView from './WeatherView';
 
 import {
     View,
@@ -66,15 +67,47 @@ class Main extends Component {
         this.setState({
             zip: event.nativeEvent.text
         })
+
+    }
+    handleSubmit() {
+        // update our indicatorIOS spinner
+        this.setState({
+            isLoading: true
+        });
+        api.getWeather(this.state.zip).then((res) => {
+            if(res.message === "Not Found"){
+                this.setState({
+                    error: 'Zipcode Not Found',
+                    isLoading: false
+                })
+
+            } else {
+                this.props.navigator.push({
+                    title: 'weather',
+                    component: WeatherView
+
+                });
+                this.setState({
+                    isLoading: false,
+                    error: false,
+                    zip: ''
+                })
+            }
+        })
     }
     render(){
         return (
             <View
                 style={styles.mainContainer}>
                 <Text style={styles.title}>Enter Zip Code</Text>
-                <TextInput style={styles.searchInput} />
+                <TextInput style={styles.searchInput}
+                   value={this.state.zip}
+                   onChange={this.handleChange.bind(this)}
+
+                />
                 <TouchableHighlight
-                    style={styles.button} >
+                    style={styles.button}
+                    onPress={this.handleSubmit.bind(this)}>
                     <Text style={styles.buttonText}>Enter</Text>
                 </TouchableHighlight>
             </View>
