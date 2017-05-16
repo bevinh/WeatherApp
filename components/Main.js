@@ -84,10 +84,11 @@ class Main extends Component {
 
                 } else {
                     console.log(res)
-                    this.props.navigator.push({
+                    console.log(res.current_observation.icon_url)
+                     this.props.navigator.push({
                         title: 'weather',
-                        component: WeatherView
-
+                        component: WeatherView,
+                        passProps: {currentWeather: res}
                     });
                     this.setState({
                         isLoading: false,
@@ -115,6 +116,10 @@ class Main extends Component {
                     onPress={this.handleSubmit.bind(this)}>
                     <Text style={styles.buttonText}>Enter</Text>
                 </TouchableHighlight>
+                <ActivityIndicator
+                    animating={this.state.isLoading}
+                    color="#111"
+                    size="large"></ActivityIndicator>
             </View>
         )
     }
