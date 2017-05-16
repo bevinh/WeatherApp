@@ -14,6 +14,6 @@ module.exports = config;
 
 Name this file config.js and compile your code
 
-#More about the app
+# More about the app
 This is just a demo app to show how easy it is to use React Native with IOS. I will perhaps build out the Android version shortly.
 
